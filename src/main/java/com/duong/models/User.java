@@ -1,5 +1,6 @@
 package com.duong.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
+
 
 public class User {
 	@Id
@@ -24,7 +35,14 @@ public class User {
 	private String email;
 	private String password;
 	private String gender;
+	private String avatar;
+	private String bio;
+	private Boolean reqUser;
+	private String background;
+	private String location;
+	private LocalDateTime createdAt;
 	
+	private Boolean followed;
 	private List<Integer> follower=new ArrayList<>();
 	
 	private List<Integer> followings=new ArrayList<>();
@@ -32,122 +50,6 @@ public class User {
 	@JsonIgnore
 	@ManyToMany
 	private List<Post> savedPost=new ArrayList<>();
-	
-	public User() {
-		// TODO Auto-generated constructor stub
-	}
-
-
-
-
-	public User(int id, String firstName, String lastName, String email, String password, String gender,
-			List<Integer> follower, List<Integer> followings, List<Post> savedPost) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.gender = gender;
-		this.follower = follower;
-		this.followings = followings;
-		this.savedPost = savedPost;
-	}
-
-
-
-	public List<Post> getSavedPost() {
-		return savedPost;
-	}
-
-
-
-	public void setSavedPost(List<Post> savedPost) {
-		this.savedPost = savedPost;
-	}
-
-
-
-	public String getGender() {
-		return gender;
-	}
-
-
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-
-
-	public List<Integer> getFollower() {
-		return follower;
-	}
-
-
-
-	public void setFollower(List<Integer> follower) {
-		this.follower = follower;
-	}
-
-
-
-	public List<Integer> getFollowings() {
-		return followings;
-	}
-
-
-
-	public void setFollowings(List<Integer> followings) {
-		this.followings = followings;
-	}
-
-
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-
-	public int getId() {
-		return id;
-	}
-
-
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	
 	
 }

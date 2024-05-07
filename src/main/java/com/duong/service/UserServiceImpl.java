@@ -1,5 +1,6 @@
 package com.duong.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +25,9 @@ public class UserServiceImpl implements UserService {
 		newUser.setFirstName(user.getFirstName());
 		newUser.setLastName(user.getLastName());
 		newUser.setPassword(user.getPassword());
-		newUser.setId(user.getId());
-
+		newUser.setGender(user.getGender());
+		newUser.setCreatedAt(LocalDateTime.now());
+		newUser.setReqUser(false);
 		User savedUser = userRepository.save(newUser);
 		return savedUser;
 	}
@@ -53,14 +55,20 @@ public class UserServiceImpl implements UserService {
 		User reqUser = findUserById(reqUserId);
 
 		User user2 = findUserById(userId2);
-
-		user2.getFollower().add(reqUser.getId());
-		reqUser.getFollowings().add(user2.getId());
-
+		
+		if(user2.getFollower().contains(reqUserId)) {
+			user2.getFollower().remove(reqUserId);
+			reqUser.getFollowings().remove(userId2);
+			user2.setFollowed(false);
+		}else {
+			user2.getFollower().add(reqUser.getId());
+			reqUser.getFollowings().add(user2.getId());
+			user2.setFollowed(true);
+		}
 		userRepository.save(reqUser);
 		userRepository.save(user2);
 
-		return reqUser;
+		return user2;
 	}
 
 	@Override
@@ -85,6 +93,20 @@ public class UserServiceImpl implements UserService {
 		if(user.getGender() !=null) {
 			oldUser.setGender(user.getGender());
 		}
+		if(user.getBio() !=null) {
+			oldUser.setBio(user.getBio());
+		}
+		if(user.getAvatar() !=null) {
+			oldUser.setAvatar(user.getAvatar());
+		}
+		if(user.getBackground() !=null) {
+			oldUser.setBackground(user.getBackground());
+		}
+		if(user.getLocation() !=null) {
+			oldUser.setLocation(user.getLocation());
+		}
+		
+		
 		User updatedUser = userRepository.save(oldUser);
 		return updatedUser;
 	}
@@ -99,7 +121,9 @@ public class UserServiceImpl implements UserService {
 	public User findUserByJwt(String jwt) {
 		
 		String email =JwtProvider.getEmailFromJwtToken(jwt);
-		
+		User user= userRepository.findByEmail(email);
+		user.setReqUser(true);
+		userRepository.save(user);
 		return userRepository.findByEmail(email);
 	}
 

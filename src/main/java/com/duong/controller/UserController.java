@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.duong.config.JwtProvider;
 import com.duong.exceptions.UserException;
 import com.duong.models.User;
 import com.duong.repository.UserRepository;
+import com.duong.request.LoginRequest;
+import com.duong.response.AuthResponse;
 import com.duong.service.UserService;
 
 @RestController
@@ -84,5 +88,7 @@ public class UserController {
 		
 		return user;
 	}
+	
+
 	
 }
