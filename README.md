@@ -54,3 +54,14 @@ Before running this project, ensure you have the following installed:
    ```bash
    git clone https://github.com/Viviorigi/social-media-be-springboot.git
    cd social-media-be-springboot
+
+properties
+spring.datasource.url=jdbc:mysql://localhost:3306/social_media
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+mvn clean install
+
+mvn spring-boot:run
+
+The application will run at http://localhost:8080.
